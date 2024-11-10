@@ -133,6 +133,15 @@ class NewsController extends Controller
     public function destroy($id)
     {
         $news = News::find($id);
+        
+        // Delete associated replies for each comment
+        foreach ($news->comments as $comment) {
+            $comment->replies()->delete(); // Assuming you have a relationship defined in the Comment model
+        }
+
+        // Now delete the comments
+        $news->comments()->delete(); // Assuming you have a relationship defined in the News model
+
         $path = "uploads/";
         File::delete($path . $news->thumbnail);
         $news->delete();

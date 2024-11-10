@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ReplyController;
 
 Route::get('/', [DashboardController::class, 'home'])->name('home');
 Route::get('/home', [DashboardController::class, 'home'])->name('home');
@@ -37,6 +38,9 @@ Route::middleware('auth')->group(function () {
     
     // Comment
     Route::post('/comment/{news_id}', [CommentController::class, 'store'])->name('comment.store');
+
+    // Store Reply
+    Route::post('/reply/{comment_id}', [ReplyController::class, 'store'])->name('reply.store');
 });
 
 Auth::routes();
